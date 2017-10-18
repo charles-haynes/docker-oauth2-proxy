@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:latest as build
 
 ENV OAUTH2_PROXY_VERSION="2.2"
 ENV OAUTH2_PROXY_PKG="oauth2_proxy-${OAUTH2_PROXY_VERSION}.0.linux-amd64.go1.8.1"
@@ -24,7 +24,7 @@ RUN apk update && \
     apk upgrade && \
     apk add $APP_PKGS
 
-COPY --from=0 /bin/oauth2_proxy /bin/
+COPY --from=build /bin/oauth2_proxy /bin/
 
 EXPOSE 4180
 
